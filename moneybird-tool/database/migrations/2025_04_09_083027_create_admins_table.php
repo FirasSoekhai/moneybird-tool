@@ -9,10 +9,12 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up(): void
+    public function up()
     {
         Schema::create('admins', function (Blueprint $table) {
-            $table->id();
+            $table->id('admin_id');
+            $table->foreignId('user_id')->constrained('users', 'user_id');
+            $table->integer('admin_level')->default(1);
             $table->timestamps();
         });
     }
