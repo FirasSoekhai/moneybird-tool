@@ -35,7 +35,6 @@ class User extends Authenticatable
     {
         return $this->hasOne(Admin::class, 'user_id', 'user_id');
     }
-
     public function isAdmin()
     {
         return $this->admin()->exists();
