@@ -1,113 +1,87 @@
-<script setup>
-import GuestLayout from '@/Layouts/GuestLayout.vue';
-import InputError from '@/Components/InputError.vue';
-import InputLabel from '@/Components/InputLabel.vue';
-import PrimaryButton from '@/Components/PrimaryButton.vue';
-import TextInput from '@/Components/TextInput.vue';
-import { Head, Link, useForm } from '@inertiajs/vue3';
-
-const form = useForm({
-    name: '',
-    email: '',
-    password: '',
-    password_confirmation: '',
-});
-
-const submit = () => {
-    form.post(route('register'), {
-        onFinish: () => form.reset('password', 'password_confirmation'),
-    });
-};
-</script>
-
 <template>
-    <GuestLayout>
-        <Head title="Register" />
-
-        <form @submit.prevent="submit">
+    <div class="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+      <div class="max-w-md w-full space-y-8">
+        <div>
+          <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">
+            Create your account
+          </h2>
+        </div>
+        <form class="mt-8 space-y-6" @submit.prevent="register">
+          <div class="rounded-md shadow-sm -space-y-px">
             <div>
-                <InputLabel for="name" value="Name" />
-
-                <TextInput
-                    id="name"
-                    type="text"
-                    class="mt-1 block w-full"
-                    v-model="form.name"
-                    required
-                    autofocus
-                    autocomplete="name"
-                />
-
-                <InputError class="mt-2" :message="form.errors.name" />
+              <label for="username" class="sr-only">Username</label>
+              <input id="username" v-model="form.username" name="username" type="text" required 
+                     class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 
+                            placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 
+                            focus:border-indigo-500 focus:z-10 sm:text-sm" 
+                     placeholder="Username" />
+              <div v-if="form.errors.username" class="text-red-500 text-sm mt-1">{{ form.errors.username }}</div>
             </div>
-
-            <div class="mt-4">
-                <InputLabel for="email" value="Email" />
-
-                <TextInput
-                    id="email"
-                    type="email"
-                    class="mt-1 block w-full"
-                    v-model="form.email"
-                    required
-                    autocomplete="username"
-                />
-
-                <InputError class="mt-2" :message="form.errors.email" />
+            <div>
+              <label for="password" class="sr-only">Password</label>
+              <input id="password" v-model="form.password" name="password" type="password" required 
+                     class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 
+                            placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 
+                            focus:border-indigo-500 focus:z-10 sm:text-sm" 
+                     placeholder="Password" />
+              <div v-if="form.errors.password" class="text-red-500 text-sm mt-1">{{ form.errors.password }}</div>
             </div>
-
-            <div class="mt-4">
-                <InputLabel for="password" value="Password" />
-
-                <TextInput
-                    id="password"
-                    type="password"
-                    class="mt-1 block w-full"
-                    v-model="form.password"
-                    required
-                    autocomplete="new-password"
-                />
-
-                <InputError class="mt-2" :message="form.errors.password" />
+            <div>
+              <label for="password_confirmation" class="sr-only">Confirm Password</label>
+              <input id="password_confirmation" v-model="form.password_confirmation" name="password_confirmation" 
+                     type="password" required 
+                     class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 
+                            placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 
+                            focus:border-indigo-500 focus:z-10 sm:text-sm" 
+                     placeholder="Confirm Password" />
             </div>
-
-            <div class="mt-4">
-                <InputLabel
-                    for="password_confirmation"
-                    value="Confirm Password"
-                />
-
-                <TextInput
-                    id="password_confirmation"
-                    type="password"
-                    class="mt-1 block w-full"
-                    v-model="form.password_confirmation"
-                    required
-                    autocomplete="new-password"
-                />
-
-                <InputError
-                    class="mt-2"
-                    :message="form.errors.password_confirmation"
-                />
+          </div>
+  
+          <div>
+            <button type="submit" 
+                    class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm 
+                           font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 
+                           focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                    :disabled="form.processing">
+              Register
+            </button>
+          </div>
+  
+          <div class="flex items-center justify-between">
+            <div class="text-sm">
+              <Link :href="route('login')" class="font-medium text-indigo-600 hover:text-indigo-500">
+                Already have an account? Login here
+              </Link>
             </div>
-
-            <div class="mt-4 flex items-center justify-end">
-                <Link
-                    :href="route('login')"
-                    class="rounded-md text-sm text-gray-600 underline hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-                >
-                    Already registered?
-                </Link>
-
-                <PrimaryButton
-                    class="ms-4"
-                    :class="{ 'opacity-25': form.processing }"
-                    :disabled="form.processing"
-                >
-                    Register
-                </PrimaryButton>
-            </div>
+          </div>
         </form>
-    </GuestLayout>
-</template>
+      </div>
+    </div>
+  </template>
+  
+  <script>
+  import { defineComponent } from 'vue';
+  import { Link, useForm } from '@inertiajs/vue3';
+  
+  export default defineComponent({
+    components: {
+      Link
+    },
+    setup() {
+      const form = useForm({
+        username: '',
+        password: '',
+        password_confirmation: ''
+      });
+  
+      const register = () => {
+        form.post(route('register'));
+      };
+  
+      return {
+        form,
+        register
+      };
+    }
+  });
+  </script>

@@ -1,100 +1,76 @@
-<script setup>
-import Checkbox from '@/Components/Checkbox.vue';
-import GuestLayout from '@/Layouts/GuestLayout.vue';
-import InputError from '@/Components/InputError.vue';
-import InputLabel from '@/Components/InputLabel.vue';
-import PrimaryButton from '@/Components/PrimaryButton.vue';
-import TextInput from '@/Components/TextInput.vue';
-import { Head, Link, useForm } from '@inertiajs/vue3';
-
-defineProps({
-    canResetPassword: {
-        type: Boolean,
-    },
-    status: {
-        type: String,
-    },
-});
-
-const form = useForm({
-    email: '',
-    password: '',
-    remember: false,
-});
-
-const submit = () => {
-    form.post(route('login'), {
-        onFinish: () => form.reset('password'),
-    });
-};
-</script>
-
 <template>
-    <GuestLayout>
-        <Head title="Log in" />
-
-        <div v-if="status" class="mb-4 text-sm font-medium text-green-600">
-            {{ status }}
+    <div class="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+      <div class="max-w-md w-full space-y-8">
+        <div>
+          <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">
+            Sign in to your account
+          </h2>
         </div>
-
-        <form @submit.prevent="submit">
+        <form class="mt-8 space-y-6" @submit.prevent="login">
+          <div class="rounded-md shadow-sm -space-y-px">
             <div>
-                <InputLabel for="email" value="Email" />
-
-                <TextInput
-                    id="email"
-                    type="email"
-                    class="mt-1 block w-full"
-                    v-model="form.email"
-                    required
-                    autofocus
-                    autocomplete="username"
-                />
-
-                <InputError class="mt-2" :message="form.errors.email" />
+              <label for="username" class="sr-only">Username</label>
+              <input id="username" v-model="form.username" name="username" type="text" required 
+                     class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 
+                            placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 
+                            focus:border-indigo-500 focus:z-10 sm:text-sm" 
+                     placeholder="Username" />
+              <div v-if="form.errors.username" class="text-red-500 text-sm mt-1">{{ form.errors.username }}</div>
             </div>
-
-            <div class="mt-4">
-                <InputLabel for="password" value="Password" />
-
-                <TextInput
-                    id="password"
-                    type="password"
-                    class="mt-1 block w-full"
-                    v-model="form.password"
-                    required
-                    autocomplete="current-password"
-                />
-
-                <InputError class="mt-2" :message="form.errors.password" />
+            <div>
+              <label for="password" class="sr-only">Password</label>
+              <input id="password" v-model="form.password" name="password" type="password" required 
+                     class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 
+                            placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 
+                            focus:border-indigo-500 focus:z-10 sm:text-sm" 
+                     placeholder="Password" />
             </div>
-
-            <div class="mt-4 block">
-                <label class="flex items-center">
-                    <Checkbox name="remember" v-model:checked="form.remember" />
-                    <span class="ms-2 text-sm text-gray-600"
-                        >Remember me</span
-                    >
-                </label>
+          </div>
+  
+          <div>
+            <button type="submit" 
+                    class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm 
+                           font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 
+                           focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                    :disabled="form.processing">
+              Sign in
+            </button>
+          </div>
+  
+          <div class="flex items-center justify-between">
+            <div class="text-sm">
+              <Link :href="route('register')" class="font-medium text-indigo-600 hover:text-indigo-500">
+                Don't have an account? Register here
+              </Link>
             </div>
-
-            <div class="mt-4 flex items-center justify-end">
-                <Link
-                    v-if="canResetPassword"
-                    :href="route('password.request')"
-                    class="rounded-md text-sm text-gray-600 underline hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-                >
-                    Forgot your password?
-                </Link>
-
-                <PrimaryButton
-                    class="ms-4"
-                    :class="{ 'opacity-25': form.processing }"
-                    :disabled="form.processing"
-                >
-                    Log in
-                </PrimaryButton>
-            </div>
+          </div>
         </form>
-    </GuestLayout>
-</template>
+      </div>
+    </div>
+  </template>
+  
+  <script>
+  import { defineComponent } from 'vue';
+  import { Link, useForm } from '@inertiajs/vue3';
+  
+  export default defineComponent({
+    components: {
+      Link
+    },
+    setup() {
+      const form = useForm({
+        username: '',
+        password: '',
+      });
+  
+      const login = () => {
+        form.post(route('login'));
+      };
+  
+      return {
+        form,
+        login
+      };
+    }
+  });
+  </script>

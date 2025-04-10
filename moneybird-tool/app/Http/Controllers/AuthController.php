@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Admin;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -18,8 +19,8 @@ class AuthController extends Controller
     public function login(Request $request)
     {
         $credentials = $request->validate([
-            'username' => ['required', 'string'],
-            'password' => ['required'],
+            'username' => 'required',
+            'password' => 'required',
         ]);
 
         if (Auth::attempt($credentials)) {
@@ -40,21 +41,22 @@ class AuthController extends Controller
 
     public function register(Request $request)
     {
-        $request->validate([
-            'username' => ['required', 'string', 'unique:users,username'],
-            'password' => ['required', 'confirmed', 'min:8'],
+        $validated = $request->validate([
+            'username' => 'required|unique:users,username',
+            'password' => 'required|min:8|confirmed',
         ]);
 
         $user = User::create([
-            'username' => $request->username,
-            'password' => Hash::make($request->password),
+            'username' => $validated['username'],
+            'password' => Hash::make($validated['password']),
             'isVerified' => false,
         ]);
 
         Auth::login($user);
 
-        return redirect('/dashboard');
+        return redirect()->route('dashboard');
     }
+
 
     public function logout(Request $request)
     {

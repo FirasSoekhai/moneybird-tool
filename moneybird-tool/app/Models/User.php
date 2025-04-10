@@ -18,13 +18,12 @@ class User extends Authenticatable
         'username',
         'password',
         'isVerified',
-        'admin_id',
     ];
-
 
 
     protected $hidden = [
         'password',
+        'remember_token',
     ];
 
     protected $casts = [
