@@ -24,4 +24,6 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+Route::post('/admin/users/{user}/approve', [AdminUserController::class, 'approve']);
+
 require __DIR__.'/auth.php';
