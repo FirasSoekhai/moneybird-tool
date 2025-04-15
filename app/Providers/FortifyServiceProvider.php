@@ -2,6 +2,9 @@
 
 namespace App\Providers;
 
+use App\Models\User;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\ValidationException;
 use App\Actions\Fortify\CreateNewUser;
 use App\Actions\Fortify\ResetUserPassword;
 use App\Actions\Fortify\UpdateUserPassword;
@@ -32,6 +35,26 @@ class FortifyServiceProvider extends ServiceProvider
         Fortify::updateUserProfileInformationUsing(UpdateUserProfileInformation::class);
         Fortify::updateUserPasswordsUsing(UpdateUserPassword::class);
         Fortify::resetUserPasswordsUsing(ResetUserPassword::class);
+        Fortify::authenticateUsing(function (Request $request) {
+            $user = User::where('email', $request->email)->first();
+        
+            if (
+                $user &&
+                Hash::check($request->password, $user->password) &&
+                $user->isVerified // ✅ check of gebruiker goedgekeurd is
+            ) {
+                return $user;
+            }
+        
+            // Eventueel: geef aangepaste foutmelding bij niet-goedgekeurde gebruiker
+            if ($user && !$user->isVerified) {
+                throw ValidationException::withMessages([
+                    Fortify::username() => __('Je account is nog niet goedgekeurd door een admin.'),
+                ]);
+            }
+        
+            return null;
+        });
 
         RateLimiter::for('login', function (Request $request) {
             $throttleKey = Str::transliterate(Str::lower($request->input(Fortify::username())).'|'.$request->ip());
