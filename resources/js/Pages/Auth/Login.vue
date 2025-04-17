@@ -96,5 +96,7 @@ const submit = () => {
                 </PrimaryButton>
             </div>
         </form>
+        <Link
+            :href="route('register')"> register </Link>
     </GuestLayout>
 </template>
