@@ -6,6 +6,11 @@ import DropdownLink from '@/Components/DropdownLink.vue';
 import NavLink from '@/Components/NavLink.vue';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue';
 import { Link } from '@inertiajs/vue3';
+import { computed } from 'vue';
+import { usePage } from '@inertiajs/vue3';
+
+const page = usePage();
+const isAdmin = computed(() => page.props.auth?.user?.is_admin);
 
 const showingNavigationDropdown = ref(false);
 </script>
@@ -77,11 +82,11 @@ const showingNavigationDropdown = ref(false);
                                             Profile
                                         </DropdownLink>
                                         <DropdownLink
-                                        v-if="$page.props.auth.user?.is_admin"
+                                        v-if="isAdmin"
                                         :href="route('admin.dashboard')"
                                         >
-                                        Admin
-                                        </DropdownLink>
+                                            Admin
+                                            </DropdownLink>
                                         <DropdownLink
                                             :href="route('logout')"
                                             method="post"
