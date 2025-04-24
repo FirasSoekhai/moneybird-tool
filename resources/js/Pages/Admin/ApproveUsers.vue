@@ -1,9 +1,8 @@
 <template>
     <div class="p-6 max-w-4xl mx-auto">
       <h1 class="text-2xl font-bold mb-6">Gebruikers Goedkeuren</h1>
-  
-      <div v-if="users.length === 0" class="text-gray-600">
-        Alle gebruikers zijn al goedgekeurd 🎉
+      <div v-if="users.includes((user) => {return user.isVerified === 0})" class="text-gray-600">
+        Alle gebruikers zijn al goedgekeurd
       </div>
   
       <table v-else class="w-full border text-sm">
