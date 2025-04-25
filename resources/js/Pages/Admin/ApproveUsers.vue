@@ -1,4 +1,5 @@
 <template>
+  <AuthenticatedLayout>
     <div class="p-6 max-w-4xl mx-auto">
       <h1 class="text-2xl font-bold mb-6">Gebruikers Goedkeuren</h1>
       <div v-if="users.includes((user) => {return user.isVerified === 0})" class="text-gray-600">
@@ -31,11 +32,13 @@
         </tbody>
       </table>
     </div>
+    </AuthenticatedLayout>
   </template>
   
   <script setup>
-  import { router } from '@inertiajs/vue3'
-  import { defineProps } from 'vue'
+  import { router } from '@inertiajs/vue3';
+  import { defineProps } from 'vue';
+  import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
   
   defineProps({
     users: Array
