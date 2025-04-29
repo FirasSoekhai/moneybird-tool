@@ -32,10 +32,7 @@ const showingNavigationDropdown = ref(false);
                                         class="block h-9 w-auto fill-current text-gray-800"
                                     />
                                 </Link>
-                            </div>
-
-                            <!-- Navigation Links -->
-                            
+                            </div>            
                         </div>
 
                         <div class="hidden sm:ms-6 sm:flex sm:items-center">
