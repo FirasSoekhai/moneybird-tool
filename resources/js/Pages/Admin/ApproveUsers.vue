@@ -2,7 +2,7 @@
   <AuthenticatedLayout>
     <div class="p-6 max-w-4xl mx-auto">
       <h1 class="text-2xl font-bold mb-6">Gebruikers Goedkeuren</h1>
-      <div v-if="users.includes((user) => {return user.isVerified === 0})" class="text-gray-600">
+      <div v-if="unverifiedUsers.length === 0" class="text-gray-600">
         Alle gebruikers zijn al goedgekeurd
       </div>
   
@@ -16,7 +16,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="user in users" :key="user.user_id" class="hover:bg-gray-50">
+          <tr v-for="user in unverifiedUsers" class="hover:bg-gray-50">
             <td class="p-2 border-b">{{ user.name }}</td>
             <td class="p-2 border-b">{{ user.email }}</td>
             <td class="p-2 border-b">{{ new Date(user.created_at).toLocaleDateString() }}</td>
@@ -40,17 +40,22 @@
   import { defineProps } from 'vue';
   import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
   
-  defineProps({
+  const props = defineProps({
     users: Array
+  })
+
+  const unverifiedUsers = props.users.filter((user, index) => {
+    return user.isVerified === 0;
   })
   
   function approveUser(userId) {
     if (confirm('Weet je zeker dat je deze gebruiker wilt goedkeuren?')) {
       router.post(`/admin/users/${userId}/approve`, {}, {
         preserveScroll: true,
+        preserveState: false,
         onSuccess: () => {
           // reload pagina om lijst te verversen
-          router.reload()
+          router.reload();
         }
       })
     }
