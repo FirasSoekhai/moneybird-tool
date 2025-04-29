@@ -7,6 +7,8 @@ use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Middleware\CheckIfVerified;
+use App\Http\Controllers\DashboardController;
 
 Route::get('/', function () {
     if (Auth::check()) {
@@ -31,5 +33,13 @@ Route::middleware(['auth', 'admin'])->group(function () {
 });
 
 Route::post('/admin/users/{user}/approve', [AdminUserController::class, 'approve']);
+
+Route::middleware(['auth', CheckIfVerified::class])->group(function () {
+    Route::get('/dashboard', fn () => Inertia::render('Dashboard'))->name('dashboard');
+});
+
+Route::get('/waiting', function () {
+    return Inertia::render('Auth/WaitingApproval');
+})->name('waiting-for-approval');
 
 require __DIR__.'/auth.php';
