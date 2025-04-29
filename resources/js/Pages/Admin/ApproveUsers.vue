@@ -1,5 +1,12 @@
 <template>
   <AuthenticatedLayout>
+    <template #header>
+            <h2
+                class="text-xl font-semibold leading-tight text-gray-800"
+            >
+                Admin
+            </h2>
+        </template>
     <div class="p-6 max-w-4xl mx-auto">
       <h1 class="text-2xl font-bold mb-6">Gebruikers Goedkeuren</h1>
       <div v-if="unverifiedUsers.length === 0" class="text-gray-600">
