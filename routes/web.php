@@ -34,6 +34,8 @@ Route::middleware(['auth', 'admin'])->group(function () {
 
 Route::post('/admin/users/{user}/approve', [AdminUserController::class, 'approve']);
 
+Route::post('/admin/users/{user}/makeadmin', [AdminUserController::class, 'makeadmin']);
+
 Route::middleware(['auth', CheckIfVerified::class])->group(function () {
     Route::get('/dashboard', fn () => Inertia::render('Dashboard'))->name('dashboard');
 });
