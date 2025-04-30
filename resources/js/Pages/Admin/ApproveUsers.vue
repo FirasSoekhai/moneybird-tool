@@ -43,7 +43,7 @@
         </div>
         <div class="py-2">
           <div class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8 overflow-hidden bg-white shadow-sm sm:rounded-lg">
-            <h1 class="text-2xl font-bold mb-6">Admin maken</h1>
+            <h1 class="text-2xl font-bold mb-6">Admin Maken</h1>
             <div v-if="nonAdmins.length === 0" class="text-gray-600">
               Geen gebruikers om admin te maken
             </div>
