@@ -82,13 +82,13 @@ const submit = () => {
                 <Link
                     v-if="canResetPassword"
                     :href="route('password.request')"
-                    class="mr-20 rounded-md text-sm text-gray-600 underline hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                    class="mr-14 rounded-md text-sm text-gray-600 underline hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                 >
-                    Forgot your password?
+                    Wachtwoord vergeten?
                 </Link>
 <Link 
                     :href="route('register')"
-                    class="ml-2"> Register </Link>
+                    class="ml-4"> Registreer </Link>
                 <PrimaryButton
                     class="ml-4 mr-2"
                     :class="{ 'opacity-25': form.processing }"
