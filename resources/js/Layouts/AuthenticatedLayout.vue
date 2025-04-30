@@ -72,7 +72,7 @@ const showingNavigationDropdown = ref(false);
                                         <DropdownLink
                                             :href="route('profile.edit')"
                                         >
-                                            Profile
+                                            Profiel
                                         </DropdownLink>
                                         <DropdownLink
                                         v-if="isAdmin"
@@ -168,7 +168,7 @@ const showingNavigationDropdown = ref(false);
                             Dashboard
                         </ResponsiveNavLink>
                             <ResponsiveNavLink :href="route('profile.edit')">
-                                Profile
+                                Profiel
                             </ResponsiveNavLink>
                             <ResponsiveNavLink 
                             v-if="isAdmin"
