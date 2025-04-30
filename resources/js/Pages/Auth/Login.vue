@@ -39,7 +39,7 @@ const submit = () => {
 
         <form @submit.prevent="submit">
             <div>
-                <InputLabel for="email" value="Email" />
+                <InputLabel for="email" value="E-mail" />
 
                 <TextInput
                     id="email"
@@ -55,7 +55,7 @@ const submit = () => {
             </div>
 
             <div class="mt-4">
-                <InputLabel for="password" value="Password" />
+                <InputLabel for="password" value="Wachtwoord" />
 
                 <TextInput
                     id="password"
@@ -73,7 +73,7 @@ const submit = () => {
                 <label class="flex items-center">
                     <Checkbox name="remember" v-model:checked="form.remember" />
                     <span class="ms-2 text-sm text-gray-600"
-                        >Remember me</span
+                        >Onthoud mij</span
                     >
                 </label>
             </div>
@@ -86,7 +86,7 @@ const submit = () => {
                 >
                     Wachtwoord vergeten?
                 </Link>
-<Link 
+                <Link 
                     :href="route('register')"
                     class="ml-4"> Registreer </Link>
                 <PrimaryButton
