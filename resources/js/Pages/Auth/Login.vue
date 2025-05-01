@@ -27,6 +27,7 @@ const submit = () => {
         onFinish: () => form.reset('password'),
     });
 };
+console.log(form.errors.email)
 </script>
 
 <template>
@@ -51,7 +52,7 @@ const submit = () => {
                     autocomplete="username"
                 />
 
-                <InputError class="mt-2" :message="form.errors.email" />
+                <InputError class="mt-2" :message="'Foute inloggegevens'" />
             </div>
 
             <div class="mt-4">
