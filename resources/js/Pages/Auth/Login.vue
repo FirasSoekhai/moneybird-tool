@@ -27,7 +27,6 @@ const submit = () => {
         onFinish: () => form.reset('password'),
     });
 };
-console.log(form.errors.email)
 </script>
 
 <template>
