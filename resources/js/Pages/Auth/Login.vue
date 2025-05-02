@@ -52,7 +52,7 @@ console.log(form.errors.email)
                     autocomplete="username"
                 />
 
-                <InputError class="mt-2" :message="'Foute inloggegevens'" />
+                <InputError class="mt-2" :message="form.errors.email" />
             </div>
 
             <div class="mt-4">
