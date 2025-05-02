@@ -18,12 +18,13 @@ class CheckIfVerified
 
     public function handle(Request $request, Closure $next): Response
     {
+        // Controleer of de gebruiker is ingelogd en of deze is goedgekeurd
         $user = $this->auth->guard()->user();
 
+        // Als de gebruiker niet is ingelogd of niet is goedgekeurd, stuur ze dan door naar de wachtpagina
         if (!$user || $user->isVerified !== 1) {
             return redirect()->route('waiting-for-approval');
         }
-
         return $next($request);
     }
 }

@@ -18,6 +18,7 @@ class ProfileController extends Controller
      */
     public function edit(Request $request): Response
     {
+        // Laat het profiel bewerken scherm zien
         return Inertia::render('Profile/Edit', [
             'mustVerifyEmail' => $request->user() instanceof MustVerifyEmail,
             'status' => session('status'),

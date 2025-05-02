@@ -16,6 +16,7 @@ class AdminMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
+        // Kijkt of de gebruiker een admin is, zo niet dan word een error weergeven
         if (!Auth::check() || !Auth::user()->is_admin) {
             abort(403, 'Unauthorized');
         }

@@ -25,7 +25,7 @@ class AdminUserController extends Controller
 
         return redirect()->back()->with('success', 'Gebruiker goedgekeurd.');
     }
-    
+    // Maken van een admin
     public function makeadmin(User $user): RedirectResponse
     {
         $user->is_admin = true;
